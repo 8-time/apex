@@ -1,0 +1,12 @@
+{
+  "name": "apex",
+  "displayName": "apex",
+  "expo": {
+    "name": "apex",
+    "slug": "apex",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
