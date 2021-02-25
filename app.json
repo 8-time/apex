@@ -5,8 +5,7 @@
     "name": "apex",
     "slug": "apex",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "orientation": "portrait",
+    "assetBundlePatterns": ["**/*"]
   }
 }
