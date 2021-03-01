@@ -33,7 +33,7 @@ const BackgroundImage: React.FC = () => {
 
   return (
     <Animated.View style={[styles.root, { left: refValue.current }]}>
-      <ImageBackground source={main} style={[styles.image]} />
+      <ImageBackground source={main} style={styles.image} />
     </Animated.View>
   );
 };

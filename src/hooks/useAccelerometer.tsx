@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, MutableRefObject } from 'react';
 import { Animated } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
-export const ACCELEROMETER_MULTIPLEXER = 30;
+export const ACCELEROMETER_MULTIPLEXER = 15;
 
 export const useAccelerometerXAnimateValueRef = (): MutableRefObject<Animated.Value> => {
   const [isAvailable, setIsAvailable] = useState(false);
