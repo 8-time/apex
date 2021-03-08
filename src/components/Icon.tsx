@@ -13,6 +13,7 @@ import sagittariusSymbol from '../../assets/icons/sagittarius-symbol.svg';
 import scorpius from '../../assets/icons/scorpius.svg';
 import taurus from '../../assets/icons/taurus.svg';
 import virgo from '../../assets/icons/virgo.svg';
+import calendar from '../../assets/icons/calendar.svg';
 
 const Icons = {
   aquarius,
@@ -27,6 +28,7 @@ const Icons = {
   scorpius,
   taurus,
   virgo,
+  calendar,
 } as const;
 
 type IIconNames = keyof typeof Icons;

@@ -10,7 +10,8 @@ import {
 import { map } from 'lodash';
 import i18n from '../../localization';
 import Colors from '../../theme/colors';
-import SignButton, { ISing } from '../../components/SignButton';
+import SignButton from '../../components/SignButton';
+import { ISing } from '../../types/common';
 
 const styles = StyleSheet.create({
   container: {

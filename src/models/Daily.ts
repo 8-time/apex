@@ -1,0 +1,71 @@
+import { types, Instance, flow, applySnapshot } from 'mobx-state-tree';
+import { WithLoadable } from './WithLoadable';
+
+const DayModel = types.model('Day', {
+  Text: types.maybe(types.string),
+});
+
+const SignModel = types.model('Sign', {
+  yesterday: types.optional(DayModel, {}),
+  today: types.optional(DayModel, {}),
+  tomorrow: types.optional(DayModel, {}),
+  tomorrow02: types.optional(DayModel, {}),
+});
+
+const DailyModel = types
+  .compose(
+    WithLoadable,
+    types.model('Daily', {
+      horo: types.optional(
+        types.model({
+          date: types.optional(
+            types.model({
+              yesterday: types.maybe(types.string),
+              today: types.maybe(types.string),
+              tomorrow: types.maybe(types.string),
+              tomorrow02: types.maybe(types.string),
+            }),
+            {},
+          ),
+          aries: types.optional(SignModel, {}),
+          taurus: types.optional(SignModel, {}),
+          gemini: types.optional(SignModel, {}),
+          cancer: types.optional(SignModel, {}),
+          leo: types.optional(SignModel, {}),
+          virgo: types.optional(SignModel, {}),
+          libra: types.optional(SignModel, {}),
+          scorpio: types.optional(SignModel, {}),
+          sagittarius: types.optional(SignModel, {}),
+          capricorn: types.optional(SignModel, {}),
+          aquarius: types.optional(SignModel, {}),
+          pisces: types.optional(SignModel, {}),
+        }),
+        {},
+      ),
+    }),
+  )
+  .actions(self => ({
+    load: flow(function* load() {
+      try {
+        self.loadingStart();
+        const response = yield fetch(
+          'https://script.google.com/macros/s/AKfycbzGiHu30LAFZorQtCqK_otO5hPnV_7A8O79TygYBx6D1q963OVIrbMODoyN4MTgxVr5/exec',
+        );
+        const responseJson = yield response.json();
+
+        if (!responseJson.horo) {
+          throw new Error('Error while SignModel/load');
+        }
+
+        applySnapshot(self.horo, responseJson.horo);
+      } catch (error) {
+        self.catchError(error);
+      } finally {
+        self.loadingStop();
+      }
+    }),
+  }));
+
+export type IDailyModel = Instance<typeof DailyModel>;
+
+export default DailyModel;

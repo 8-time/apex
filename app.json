@@ -9,6 +9,11 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "./assets/bg/main.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    }
   }
 }
