@@ -12,21 +12,26 @@ const SignModel = types.model('Sign', {
   tomorrow02: types.optional(DayModel, {}),
 });
 
+const DateModel = types.model('Date', {
+  yesterday: types.maybe(types.string),
+  today: types.maybe(types.string),
+  tomorrow: types.maybe(types.string),
+  tomorrow02: types.maybe(types.string),
+});
+
+export type IDateModel = Instance<typeof DateModel>;
+export type IDateModelKeys = keyof Pick<
+  IDateModel,
+  'today' | 'tomorrow' | 'tomorrow02' | 'yesterday'
+>;
+
 const DailyModel = types
   .compose(
     WithLoadable,
     types.model('Daily', {
       horo: types.optional(
         types.model({
-          date: types.optional(
-            types.model({
-              yesterday: types.maybe(types.string),
-              today: types.maybe(types.string),
-              tomorrow: types.maybe(types.string),
-              tomorrow02: types.maybe(types.string),
-            }),
-            {},
-          ),
+          date: types.optional(DateModel, {}),
           aries: types.optional(SignModel, {}),
           taurus: types.optional(SignModel, {}),
           gemini: types.optional(SignModel, {}),
@@ -49,7 +54,7 @@ const DailyModel = types
       try {
         self.loadingStart();
         const response = yield fetch(
-          'https://script.google.com/macros/s/AKfycbzGiHu30LAFZorQtCqK_otO5hPnV_7A8O79TygYBx6D1q963OVIrbMODoyN4MTgxVr5/exec',
+          'https://script.google.com/macros/s/AKfycbwrx-qW5-MDodK0x02yuTbjOehP3_vSSj7W-WfDyarIUiOI7P7JtUx-YaGMtCMelmQg/exec',
         );
         const responseJson = yield response.json();
 

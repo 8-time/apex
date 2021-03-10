@@ -4,7 +4,7 @@ import { PixelRatio, Text, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from '../components/Icon';
 import i18n from '../localization';
-import Colors from '../theme/colors';
+import COLORS from '../theme/colors';
 import { ISing } from '../types/common';
 
 const styles = StyleSheet.create({
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     fontSize: PixelRatio.getPixelSizeForLayoutSize(10),
     textAlign: 'center',
     fontFamily: 'Geometria-Light',
-    color: Colors.silver,
+    color: COLORS.silver,
   },
   signButton: {
     alignItems: 'center',
@@ -46,7 +46,7 @@ const SignButton: React.FC<ISignButtonProps> = ({ sign }) => {
         activeOpacity={0.6}
         onPress={onPress}
       >
-        <Icon name={sign} fill={Colors.silver} style={styles.icon} />
+        <Icon name={sign} fill={COLORS.silver} style={styles.icon} />
         <Text style={styles.label}>{i18n.t(`signs.${sign}`)}</Text>
       </TouchableOpacity>
     </View>

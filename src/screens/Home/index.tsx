@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { map } from 'lodash';
 import i18n from '../../localization';
-import Colors from '../../theme/colors';
+import COLORS from '../../theme/colors';
 import SignButton from '../../components/SignButton';
 import { ISing } from '../../types/common';
 
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     fontSize: PixelRatio.getPixelSizeForLayoutSize(16),
     textAlign: 'center',
     fontFamily: 'Geometria-Light',
-    color: Colors.silver,
+    color: COLORS.silver,
   },
   signs: {
     marginTop: PixelRatio.getPixelSizeForLayoutSize(24),
@@ -46,12 +46,12 @@ const HomeScreen: React.FC = () => {
           ))}
         </View>
         <View style={styles.signs}>
-          {map(['libra', 'scorpius', 'sagittariusSymbol'] as ISing[], sign => (
+          {map(['libra', 'scorpio', 'sagittarius'] as ISing[], sign => (
             <SignButton key={sign} sign={sign} />
           ))}
         </View>
         <View style={styles.signs}>
-          {map(['capricornius', 'aquarius', 'pisces'] as ISing[], sign => (
+          {map(['capricorn', 'aquarius', 'pisces'] as ISing[], sign => (
             <SignButton key={sign} sign={sign} />
           ))}
         </View>

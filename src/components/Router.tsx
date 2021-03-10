@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 const Router: React.FC = observer(() => {
   const {
     loading,
-    daily: { loading: isFethingDayly },
+    daily: { loading: isFethingDaily },
   } = useRootStore();
 
   if (loading) {
@@ -38,7 +38,7 @@ const Router: React.FC = observer(() => {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Sign" component={SignScreen} />
       </Stack.Navigator>
-      {isFethingDayly ? <BrandLoader /> : null}
+      {isFethingDaily ? <BrandLoader /> : null}
     </NavigationContainer>
   );
 });

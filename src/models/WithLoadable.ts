@@ -19,6 +19,8 @@ export const WithLoadable = WithLoadableBase.views(self => ({
   },
 })).actions(self => ({
   catchError(e: Error) {
+    // eslint-disable-next-line no-console
+    console.error(e.message);
     self.errorMsg = e.message;
   },
   clearError() {

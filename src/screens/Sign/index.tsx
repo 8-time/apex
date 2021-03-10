@@ -6,13 +6,18 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import times from 'lodash/times';
+import { observer } from 'mobx-react';
+import map from 'lodash/map';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import i18n from '../../localization';
-import Colors from '../../theme/colors';
+import COLORS from '../../theme/colors';
 import Icon from '../../components/Icon';
 import { ISing } from '../../types/common';
+import useRootStore from '../../hooks/useRootStore';
+import SingCard, { SIGN_CARD_WIDTH } from '../../components/SingCard';
+import { IDateModelKeys } from '../../models/Daily';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +32,7 @@ const styles = StyleSheet.create({
   headerLeft: {
     fontSize: PixelRatio.getPixelSizeForLayoutSize(24),
     fontFamily: 'Geometria-Light',
-    color: Colors.gainsboro,
+    color: COLORS.gainsboro,
     width: PixelRatio.getPixelSizeForLayoutSize(24),
   },
   headerCenter: {
@@ -47,31 +52,33 @@ const styles = StyleSheet.create({
     marginTop: PixelRatio.getPixelSizeForLayoutSize(12),
     fontSize: PixelRatio.getPixelSizeForLayoutSize(18),
     fontFamily: 'Geometria-Light',
-    color: Colors.gainsboro,
+    color: COLORS.gainsboro,
   },
   period: {
     textAlign: 'center',
     marginTop: PixelRatio.getPixelSizeForLayoutSize(8),
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(12),
-    fontFamily: 'Geometria-Light',
-    letterSpacing: 1.1,
-    color: Colors.gray,
-  },
-  border: {
-    textAlign: 'center',
-    marginHorizontal: PixelRatio.getPixelSizeForLayoutSize(8),
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(14),
+    fontSize: PixelRatio.getPixelSizeForLayoutSize(11),
     fontFamily: 'Geometria-Light',
     letterSpacing: -0.5,
-    color: Colors.gray,
+    color: COLORS.gray,
   },
-  calendar: {
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(8),
-    alignItems: 'center',
+  borderContainer: {
+    position: 'relative',
+    marginTop: PixelRatio.getPixelSizeForLayoutSize(10),
+    marginHorizontal: PixelRatio.getPixelSizeForLayoutSize(10),
+    height: PixelRatio.getPixelSizeForLayoutSize(1),
+    overflow: 'hidden',
   },
-  iconCalendar: {
-    width: PixelRatio.getPixelSizeForLayoutSize(16),
-    aspectRatio: 1,
+  border: {
+    position: 'absolute',
+    width: '100%',
+    borderRadius: PixelRatio.getPixelSizeForLayoutSize(2),
+    borderWidth: PixelRatio.getPixelSizeForLayoutSize(1),
+    borderColor: COLORS.gray,
+    borderStyle: 'dotted',
+  },
+  cards: {
+    flexDirection: 'row',
   },
 });
 
@@ -84,10 +91,9 @@ type ISignRouteProp = RouteProp<
   'Sign'
 >;
 
-const border = times(100, () => '.').join('');
-
-const Sign: React.FC = () => {
+const Sign: React.FC = observer(() => {
   const { params: { sign } = {} } = useRoute<ISignRouteProp>();
+  const { daily } = useRootStore();
   const navigation = useNavigation();
 
   if (!sign) {
@@ -103,20 +109,34 @@ const Sign: React.FC = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.headerCenter}>
-          <Icon name={sign} fill={Colors.silver} style={styles.icon} />
+          <Icon name={sign} fill={COLORS.silver} style={styles.icon} />
         </View>
         <View style={styles.headerRight} />
       </View>
       <Text style={styles.title}>{i18n.t(`signs.${sign}`)}</Text>
       <Text style={styles.period}>{i18n.t(`signsDatePeriods.${sign}`)}</Text>
-      <Text style={styles.border} lineBreakMode="clip" numberOfLines={1}>
-        {border}
-      </Text>
-      <View style={styles.calendar}>
-        <Icon name="calendar" fill={Colors.gray} style={styles.iconCalendar} />
+      <View style={styles.borderContainer}>
+        <View style={styles.border} />
       </View>
+
+      <ScrollView
+        horizontal
+        accessible={false}
+        showsHorizontalScrollIndicator={false}
+        decelerationRate="fast"
+        snapToAlignment="start"
+        pagingEnabled
+        scrollEventThrottle={16}
+        snapToInterval={SIGN_CARD_WIDTH}
+      >
+        <View style={styles.cards}>
+          {map(daily.horo.date, (value, key) => (
+            <SingCard key={key} sign={sign} dateKey={key as IDateModelKeys} />
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default Sign;
