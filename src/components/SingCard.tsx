@@ -9,7 +9,6 @@ import {
   ScrollView,
 } from 'react-native';
 import { observer } from 'mobx-react';
-import Icon from './Icon';
 import useRootStore from '../hooks/useRootStore';
 import { ISing } from '../types/common';
 import { IDateModelKeys } from '../models/Daily';
