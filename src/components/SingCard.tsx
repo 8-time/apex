@@ -16,6 +16,7 @@ import { getDateFnsCurrentLocale } from '../utils';
 import COLORS from '../theme/colors';
 
 export const { width: SIGN_CARD_WIDTH } = Dimensions.get('screen');
+const locale = getDateFnsCurrentLocale();
 
 const styles = StyleSheet.create({
   card: {
@@ -63,16 +64,22 @@ const SingCard: React.FC<ISingCardProps> = observer(({ sign, dateKey }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.date}>
-        {daily.horo.date[dateKey] &&
+        {daily.dailyByCurrentLanguage.horo.date[dateKey] &&
           format(
-            parse(daily.horo.date[dateKey] as string, 'dd.MM.yyyy', new Date()),
+            parse(
+              daily.dailyByCurrentLanguage.horo.date[dateKey] as string,
+              'dd.MM.yyyy',
+              new Date(),
+            ),
             'EEEE, LLLL dd, yyyy',
-            { locale: getDateFnsCurrentLocale() },
+            { locale },
           )}
       </Text>
       <View style={styles.innerCardWrapper}>
         <ScrollView style={styles.innerCardScroll}>
-          <Text style={styles.cardText}>{daily.horo[sign][dateKey].Text}</Text>
+          <Text style={styles.cardText}>
+            {daily.dailyByCurrentLanguage.horo[sign][dateKey].Text}
+          </Text>
         </ScrollView>
       </View>
     </View>

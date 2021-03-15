@@ -11,3 +11,13 @@ export const getDateFnsCurrentLocale = (): Locale | undefined => {
 
   return dateLocale && locale[dateLocale];
 };
+
+export const getLanguageByCurrentLocale = (): 'en' | 'ru' => {
+  const currentLocaleSign = i18n.currentLocale().slice(0, 2);
+
+  return (
+    (currentLocaleSign === 'en' && 'en') ||
+    (currentLocaleSign === 'ru' && 'ru') ||
+    'en'
+  );
+};
