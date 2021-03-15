@@ -19,21 +19,13 @@ import COLORS from '../theme/colors';
 export const { width: SIGN_CARD_WIDTH } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
-  calendar: {
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(8),
-    alignItems: 'center',
-  },
-  iconCalendar: {
-    width: PixelRatio.getPixelSizeForLayoutSize(16),
-    aspectRatio: 1,
-  },
   card: {
     width: SIGN_CARD_WIDTH,
   },
   date: {
     textTransform: 'capitalize',
     textAlign: 'center',
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(6),
+    marginTop: PixelRatio.getPixelSizeForLayoutSize(8),
     fontSize: PixelRatio.getPixelSizeForLayoutSize(12),
     fontFamily: 'Geometria-Light',
     color: COLORS.gainsboro,
@@ -71,9 +63,6 @@ const SingCard: React.FC<ISingCardProps> = observer(({ sign, dateKey }) => {
 
   return (
     <View style={styles.card}>
-      <View style={styles.calendar}>
-        <Icon name="calendar" fill={COLORS.gray} style={styles.iconCalendar} />
-      </View>
       <Text style={styles.date}>
         {daily.horo.date[dateKey] &&
           format(

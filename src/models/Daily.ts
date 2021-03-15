@@ -1,4 +1,6 @@
 import { types, Instance, flow, applySnapshot } from 'mobx-state-tree';
+import toArray from 'lodash/toArray';
+import keys from 'lodash/keys';
 import { WithLoadable } from './WithLoadable';
 
 const DayModel = types.model('Day', {
@@ -49,6 +51,14 @@ const DailyModel = types
       ),
     }),
   )
+  .views(self => ({
+    get datesValues() {
+      return toArray(self.horo.date);
+    },
+    get datesKeys() {
+      return keys(self.horo.date);
+    },
+  }))
   .actions(self => ({
     load: flow(function* load() {
       try {

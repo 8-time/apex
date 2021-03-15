@@ -7,7 +7,12 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  Animated,
 } from 'react-native';
+import * as Linking from 'expo-linking';
+import { format } from 'date-fns';
 import { observer } from 'mobx-react';
 import map from 'lodash/map';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
@@ -18,6 +23,7 @@ import { ISing } from '../../types/common';
 import useRootStore from '../../hooks/useRootStore';
 import SingCard, { SIGN_CARD_WIDTH } from '../../components/SingCard';
 import { IDateModelKeys } from '../../models/Daily';
+import useAnimateValueByTrigger from '../../hooks/useAnimateValueByTrigger';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,23 +68,34 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
     color: COLORS.gray,
   },
-  borderContainer: {
-    position: 'relative',
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(10),
+  actionsCircles: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: PixelRatio.getPixelSizeForLayoutSize(10),
     marginHorizontal: PixelRatio.getPixelSizeForLayoutSize(10),
-    height: PixelRatio.getPixelSizeForLayoutSize(1),
-    overflow: 'hidden',
   },
-  border: {
-    position: 'absolute',
-    width: '100%',
-    borderRadius: PixelRatio.getPixelSizeForLayoutSize(2),
-    borderWidth: PixelRatio.getPixelSizeForLayoutSize(1),
-    borderColor: COLORS.gray,
-    borderStyle: 'dotted',
+  circle: {
+    marginHorizontal: PixelRatio.getPixelSizeForLayoutSize(1.5),
+    width: PixelRatio.getPixelSizeForLayoutSize(7),
+    aspectRatio: 1,
   },
   cards: {
     flexDirection: 'row',
+  },
+  calendar: {
+    alignItems: 'center',
+  },
+  iconCalendar: {
+    width: PixelRatio.getPixelSizeForLayoutSize(16),
+    aspectRatio: 1,
+  },
+  link: {
+    textAlign: 'center',
+    color: COLORS.gainsboro,
+    fontFamily: 'Geometria-Light',
+    lineHeight: PixelRatio.getPixelSizeForLayoutSize(7),
+    fontSize: PixelRatio.getPixelSizeForLayoutSize(7),
+    letterSpacing: -0.1,
   },
 });
 
@@ -95,6 +112,50 @@ const Sign: React.FC = observer(() => {
   const { params: { sign } = {} } = useRoute<ISignRouteProp>();
   const { daily } = useRootStore();
   const navigation = useNavigation();
+  const scrollRef = React.useRef<ScrollView | null>(null);
+  const [selectedDatesIndex, setSelectedDatesIndex] = React.useState(0);
+  const [scrollState, setScrollState] = React.useState<'begin' | 'end'>('end');
+  const opacity = useAnimateValueByTrigger(
+    scrollState === 'begin',
+    1,
+    0.8,
+    300,
+  );
+
+  const onMomentumScrollEnd = React.useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      setScrollState('end');
+      setSelectedDatesIndex(
+        Math.round(e.nativeEvent.contentOffset.x / SIGN_CARD_WIDTH),
+      );
+    },
+    [],
+  );
+  const onMomentumScrollBegin = React.useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const floatIndex = e.nativeEvent.contentOffset.x / SIGN_CARD_WIDTH;
+      if (floatIndex < daily.datesKeys.length - 1 && floatIndex > 0) {
+        setScrollState('begin');
+      }
+    },
+    [daily.datesKeys],
+  );
+  const onPressToIngio = React.useCallback(() => {
+    Linking.openURL('https://ignio.com/');
+  }, []);
+
+  React.useEffect(() => {
+    const indexOfCurrentDate = daily.datesValues.indexOf(
+      format(new Date(), 'dd.MM.yyyy'),
+    );
+    if (indexOfCurrentDate !== -1) {
+      scrollRef.current?.scrollTo({
+        x: indexOfCurrentDate * SIGN_CARD_WIDTH,
+        animated: false,
+      });
+      setSelectedDatesIndex(indexOfCurrentDate);
+    }
+  }, [daily.datesValues]);
 
   if (!sign) {
     return null;
@@ -115,26 +176,53 @@ const Sign: React.FC = observer(() => {
       </View>
       <Text style={styles.title}>{i18n.t(`signs.${sign}`)}</Text>
       <Text style={styles.period}>{i18n.t(`signsDatePeriods.${sign}`)}</Text>
-      <View style={styles.borderContainer}>
-        <View style={styles.border} />
-      </View>
-
+      <Animated.View style={{ opacity }}>
+        <View style={styles.actionsCircles}>
+          {map(daily.datesKeys, (value, index) => (
+            <Icon
+              name="brightness"
+              key={value}
+              fill={
+                scrollState === 'end' && index === selectedDatesIndex
+                  ? COLORS.silver
+                  : COLORS.gray
+              }
+              style={styles.circle}
+            />
+          ))}
+        </View>
+        <View style={styles.calendar}>
+          <Icon
+            name="event"
+            fill={scrollState === 'end' ? COLORS.silver : COLORS.gray}
+            style={styles.iconCalendar}
+          />
+        </View>
+      </Animated.View>
       <ScrollView
+        ref={scrollRef}
         horizontal
         accessible={false}
+        onMomentumScrollBegin={onMomentumScrollBegin}
+        onMomentumScrollEnd={onMomentumScrollEnd}
         showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
+        scrollToOverflowEnabled={false}
         snapToAlignment="start"
         pagingEnabled
+        snapToStart
         scrollEventThrottle={16}
         snapToInterval={SIGN_CARD_WIDTH}
       >
         <View style={styles.cards}>
-          {map(daily.horo.date, (value, key) => (
+          {map(daily.datesKeys, key => (
             <SingCard key={key} sign={sign} dateKey={key as IDateModelKeys} />
           ))}
         </View>
       </ScrollView>
+      <TouchableOpacity activeOpacity={0.6} onPress={onPressToIngio}>
+        <Text style={styles.link}>{i18n.t('linkTo')}</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 });

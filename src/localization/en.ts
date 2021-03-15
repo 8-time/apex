@@ -28,4 +28,5 @@ export default {
     taurus: '21 Apr - 21 May',
     virgo: '22 August - 23 September',
   },
+  linkTo: 'Information provided by ignio.com',
 };
