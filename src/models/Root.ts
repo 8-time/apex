@@ -25,7 +25,6 @@ const RootModel = types
   .actions(self => ({
     initialize: flow(function* initialize() {
       try {
-        self.daily.load();
         yield self.loadAssets();
       } catch (error) {
         self.catchError(error);

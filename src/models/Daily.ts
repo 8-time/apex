@@ -1,8 +1,12 @@
 import { types, Instance, flow, applySnapshot } from 'mobx-state-tree';
 import toArray from 'lodash/toArray';
 import keys from 'lodash/keys';
+import isEmpty from 'lodash/isEmpty';
+import { parse, differenceInDays } from 'date-fns';
 import { WithLoadable } from './WithLoadable';
 import { getLanguageByCurrentLocale } from '../utils';
+
+const DIFFERENCE_IN_DAYS_TO_LOAD = 2;
 
 const DayModel = types.model('Day', {
   Text: types.maybe(types.string),
@@ -82,7 +86,7 @@ const DailyModel = types
       try {
         self.loadingStart();
         const response = yield fetch(
-          'https://script.google.com/macros/s/AKfycbwvbkFixFRtnoEBxz5yGSGKHF3v_gdFnZEGCFJAK869QiU3o7hMOzdReUPyrltSXsFg/exec',
+          'https://script.google.com/macros/s/AKfycbx8zU6YZV_dNx5ys7G-x71IJqmVgy2VLAWfCVKftCS_yl4GwvqwbIWfBYeq3rNKsB1b/exec',
         );
         const responseJson = yield response.json();
 
@@ -97,6 +101,20 @@ const DailyModel = types
         self.loadingStop();
       }
     }),
+  }))
+  .actions(self => ({
+    loadAfterRehydrate() {
+      if (isEmpty(self.datesValues) || !self.datesValues[0]) {
+        self.load();
+      } else if (
+        differenceInDays(
+          new Date(),
+          parse(self.datesValues[0] as string, 'dd.MM.yyyy', new Date()),
+        ) >= DIFFERENCE_IN_DAYS_TO_LOAD
+      ) {
+        self.load();
+      }
+    },
   }));
 
 export type IDailyModel = Instance<typeof DailyModel>;

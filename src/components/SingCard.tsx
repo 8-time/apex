@@ -64,7 +64,7 @@ const SingCard: React.FC<ISingCardProps> = observer(({ sign, dateKey }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.date}>
-        {daily.dailyByCurrentLanguage.horo.date[dateKey] &&
+        {daily.dailyByCurrentLanguage?.horo.date[dateKey] &&
           format(
             parse(
               daily.dailyByCurrentLanguage.horo.date[dateKey] as string,
@@ -78,7 +78,7 @@ const SingCard: React.FC<ISingCardProps> = observer(({ sign, dateKey }) => {
       <View style={styles.innerCardWrapper}>
         <ScrollView style={styles.innerCardScroll}>
           <Text style={styles.cardText}>
-            {daily.dailyByCurrentLanguage.horo[sign][dateKey].Text}
+            {daily.dailyByCurrentLanguage?.horo[sign][dateKey].Text}
           </Text>
         </ScrollView>
       </View>
