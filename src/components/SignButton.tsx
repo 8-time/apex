@@ -26,13 +26,17 @@ const styles = StyleSheet.create({
   signButton: {
     alignItems: 'center',
   },
+  disabled: {
+    opacity: 0.6,
+  },
 });
 
 interface ISignButtonProps {
   sign: ISing;
+  disabled?: boolean;
 }
 
-const SignButton: React.FC<ISignButtonProps> = ({ sign }) => {
+const SignButton: React.FC<ISignButtonProps> = ({ sign, disabled }) => {
   const navigation = useNavigation();
 
   const onPress = React.useCallback(() => {
@@ -42,12 +46,19 @@ const SignButton: React.FC<ISignButtonProps> = ({ sign }) => {
   return (
     <View style={styles.sign}>
       <TouchableOpacity
+        disabled={disabled}
         style={styles.signButton}
         activeOpacity={0.6}
         onPress={onPress}
       >
-        <Icon name={sign} fill={COLORS.silver} style={styles.icon} />
-        <Text style={styles.label}>{i18n.t(`signs.${sign}`)}</Text>
+        <Icon
+          name={sign}
+          fill={COLORS.silver}
+          style={[styles.icon, disabled && styles.disabled]}
+        />
+        <Text style={[styles.label, disabled && styles.disabled]}>
+          {i18n.t(`signs.${sign}`)}
+        </Text>
       </TouchableOpacity>
     </View>
   );

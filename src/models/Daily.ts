@@ -81,10 +81,24 @@ const DailyModel = types
       return keys(self.dailyByCurrentLanguage.horo.date);
     },
   }))
+  .views(self => ({
+    get isEmpty() {
+      return isEmpty(self.datesValues) || !self.datesValues[0];
+    },
+    get isOutdated() {
+      return (
+        differenceInDays(
+          new Date(),
+          parse(self.datesValues[0] as string, 'dd.MM.yyyy', new Date()),
+        ) >= DIFFERENCE_IN_DAYS_TO_LOAD
+      );
+    },
+  }))
   .actions(self => ({
     load: flow(function* load() {
       try {
         self.loadingStart();
+        self.clearError();
         const response = yield fetch(
           'https://script.google.com/macros/s/AKfycbx8zU6YZV_dNx5ys7G-x71IJqmVgy2VLAWfCVKftCS_yl4GwvqwbIWfBYeq3rNKsB1b/exec',
         );
@@ -104,14 +118,7 @@ const DailyModel = types
   }))
   .actions(self => ({
     loadAfterRehydrate() {
-      if (isEmpty(self.datesValues) || !self.datesValues[0]) {
-        self.load();
-      } else if (
-        differenceInDays(
-          new Date(),
-          parse(self.datesValues[0] as string, 'dd.MM.yyyy', new Date()),
-        ) >= DIFFERENCE_IN_DAYS_TO_LOAD
-      ) {
+      if (self.isEmpty || self.isOutdated) {
         self.load();
       }
     },

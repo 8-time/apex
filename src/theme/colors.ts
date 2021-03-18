@@ -5,6 +5,8 @@ const COLORS = {
   gainsboro: '#e0dbdc',
   gray: '#888888',
   darkslategray: '#373636',
+  burntSienna: '#EB5757',
+  sandyBrown: '#F49E60',
 } as const;
 
 export default COLORS;

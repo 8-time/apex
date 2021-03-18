@@ -29,4 +29,8 @@ export default {
     virgo: '22 August - 23 September',
   },
   linkTo: 'Information provided by ignio.com',
+  loadErrorForEmpty:
+    'Oops. Failed to load data, swipe from above to try again.',
+  loadErrorForOutdated:
+    'Hmm. Failed to update the data, swipe from above to try again.',
 };
