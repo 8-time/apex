@@ -13,12 +13,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   icon: {
-    width: PixelRatio.getPixelSizeForLayoutSize(42),
+    width: 84,
     aspectRatio: 1,
   },
   label: {
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(8),
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(10),
+    marginTop: 16,
+    fontSize: 20,
     textAlign: 'center',
     fontFamily: 'Geometria-Light',
     color: COLORS.silver,

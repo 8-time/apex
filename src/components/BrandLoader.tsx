@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    width: PixelRatio.getPixelSizeForLayoutSize(30),
+    width: 60,
     aspectRatio: 1,
   },
 });

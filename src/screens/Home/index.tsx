@@ -21,15 +21,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(12),
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(16),
+    marginTop: 24 / PixelRatio.get(),
+    fontSize: 32,
     textAlign: 'center',
     fontFamily: 'Geometria-Light',
     color: COLORS.silver,
   },
   msg: {
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(8),
-    lineHeight: PixelRatio.getPixelSizeForLayoutSize(10),
+    fontSize: 16,
+    lineHeight: 20,
     textAlign: 'center',
     fontFamily: 'Geometria-Light',
   },
@@ -37,15 +37,16 @@ const styles = StyleSheet.create({
     color: COLORS.burntSienna,
   },
   signs: {
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(24),
+    marginHorizontal: 3 / PixelRatio.get(),
+    marginTop: 62 / PixelRatio.get(),
     flexDirection: 'row',
   },
   firstRow: {
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(0),
+    marginTop: 0,
   },
   contaienerForMsg: {
-    marginHorizontal: PixelRatio.getPixelSizeForLayoutSize(8),
-    height: PixelRatio.getPixelSizeForLayoutSize(24),
+    marginHorizontal: 16,
+    height: 48,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
@@ -77,8 +78,10 @@ const HomeScreen: React.FC = observer(() => {
       </View>
 
       <ScrollView
+        overScrollMode="never"
         refreshControl={
           <RefreshControl
+            enabled={!!daily.errorMsg}
             refreshing={false}
             onRefresh={daily.errorMsg ? daily.load : undefined}
           />

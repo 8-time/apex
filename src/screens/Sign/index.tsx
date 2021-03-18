@@ -31,15 +31,15 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(12),
-    marginLeft: PixelRatio.getPixelSizeForLayoutSize(8),
-    marginRight: PixelRatio.getPixelSizeForLayoutSize(8),
+    marginTop: 24 / PixelRatio.get(),
+    marginLeft: 16,
+    marginRight: 16,
   },
   headerLeft: {
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(24),
+    fontSize: 48,
     fontFamily: 'Geometria-Light',
     color: COLORS.gainsboro,
-    width: PixelRatio.getPixelSizeForLayoutSize(24),
+    width: 48,
   },
   headerCenter: {
     flex: 1,
@@ -47,23 +47,23 @@ const styles = StyleSheet.create({
   },
   headerRight: {
     aspectRatio: 1,
-    width: PixelRatio.getPixelSizeForLayoutSize(24),
+    width: 48,
   },
   icon: {
-    width: PixelRatio.getPixelSizeForLayoutSize(72),
+    width: 142,
     aspectRatio: 1,
   },
   title: {
     textAlign: 'center',
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(12),
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(18),
+    marginTop: 24 / PixelRatio.get(),
+    fontSize: 36,
     fontFamily: 'Geometria-Light',
     color: COLORS.gainsboro,
   },
   period: {
     textAlign: 'center',
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(8),
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(11),
+    marginTop: 16 / PixelRatio.get(),
+    fontSize: 22,
     fontFamily: 'Geometria-Light',
     letterSpacing: -0.5,
     color: COLORS.gray,
@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
   actionsCircles: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: PixelRatio.getPixelSizeForLayoutSize(10),
-    marginHorizontal: PixelRatio.getPixelSizeForLayoutSize(10),
+    marginVertical: 24 / PixelRatio.get(),
+    marginHorizontal: 20,
   },
   circle: {
-    marginHorizontal: PixelRatio.getPixelSizeForLayoutSize(1.5),
-    width: PixelRatio.getPixelSizeForLayoutSize(7),
+    marginHorizontal: 3,
+    width: 14,
     aspectRatio: 1,
   },
   cards: {
@@ -86,15 +86,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconCalendar: {
-    width: PixelRatio.getPixelSizeForLayoutSize(16),
+    width: 32,
     aspectRatio: 1,
   },
   link: {
     textAlign: 'center',
     color: COLORS.gainsboro,
     fontFamily: 'Geometria-Light',
-    lineHeight: PixelRatio.getPixelSizeForLayoutSize(7),
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(7),
+    lineHeight: 14,
+    fontSize: 14,
     letterSpacing: -0.1,
   },
 });
@@ -202,6 +202,8 @@ const Sign: React.FC = observer(() => {
       <ScrollView
         ref={scrollRef}
         horizontal
+        overScrollMode="never"
+        nestedScrollEnabled
         accessible={false}
         onMomentumScrollBegin={onMomentumScrollBegin}
         onMomentumScrollEnd={onMomentumScrollEnd}
