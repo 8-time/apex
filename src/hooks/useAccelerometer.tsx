@@ -2,11 +2,26 @@ import { useEffect, useState, useRef, MutableRefObject } from 'react';
 import { Animated } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
-export const ACCELEROMETER_MULTIPLEXER = 15;
+export const ACCELEROMETER_MULTIPLEXER = 35;
 
-export const useAccelerometerXAnimateValueRef = (): MutableRefObject<Animated.Value> => {
+export const useAccelerometerXAnimateValueRef = (): MutableRefObject<Animated.ValueXY> => {
   const [isAvailable, setIsAvailable] = useState(false);
-  const ref = useRef(new Animated.Value(0));
+  const refXY = useRef(new Animated.ValueXY({ x: 0, y: 0 }));
+  const refXYOut = useRef(new Animated.ValueXY({ x: 0, y: 0 }));
+
+  Animated.spring(refXYOut.current, {
+    toValue: {
+      x: (refXY.current.x.interpolate({
+        inputRange: [-1.1, 1.1],
+        outputRange: [-ACCELEROMETER_MULTIPLEXER, ACCELEROMETER_MULTIPLEXER],
+      }) as unknown) as number,
+      y: (refXY.current.y.interpolate({
+        inputRange: [-1.1, 1.1],
+        outputRange: [-ACCELEROMETER_MULTIPLEXER, ACCELEROMETER_MULTIPLEXER],
+      }) as unknown) as number,
+    },
+    useNativeDriver: true,
+  }).start();
 
   useEffect(() => {
     const start = async () => {
@@ -22,16 +37,11 @@ export const useAccelerometerXAnimateValueRef = (): MutableRefObject<Animated.Va
     }
 
     const { remove } = Accelerometer.addListener(props => {
-      const value = props.x * ACCELEROMETER_MULTIPLEXER;
-      ref.current.setValue(
-        (value > ACCELEROMETER_MULTIPLEXER && ACCELEROMETER_MULTIPLEXER) ||
-          (value < -ACCELEROMETER_MULTIPLEXER && -ACCELEROMETER_MULTIPLEXER) ||
-          value,
-      );
+      refXY.current.setValue(props);
     });
 
     return () => remove();
   }, [isAvailable]);
 
-  return ref;
+  return refXYOut;
 };

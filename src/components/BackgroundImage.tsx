@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: h,
     width: w,
-    marginLeft: -ACCELEROMETER_MULTIPLEXER,
+    top: -ACCELEROMETER_MULTIPLEXER,
+    left: -ACCELEROMETER_MULTIPLEXER,
   },
   image: {
     flex: 1,
@@ -32,10 +33,17 @@ const styles = StyleSheet.create({
 });
 
 const BackgroundImage: React.FC = () => {
-  const refValue = useAccelerometerXAnimateValueRef();
+  const refValueXY = useAccelerometerXAnimateValueRef();
 
   return (
-    <Animated.View style={[styles.root, { left: refValue.current }]}>
+    <Animated.View
+      style={[
+        styles.root,
+        {
+          transform: refValueXY.current.getTranslateTransform(),
+        },
+      ]}
+    >
       <ImageBackground
         source={{
           uri: Asset.fromModule(require('../../assets/bg/main.png')).uri,
