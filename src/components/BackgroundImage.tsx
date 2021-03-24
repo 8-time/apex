@@ -1,3 +1,4 @@
+// TODO: Imporove performance of BackgroundImage Component
 import React from 'react';
 import {
   ImageBackground,
@@ -8,22 +9,21 @@ import {
 import { Asset } from 'expo-asset';
 import {
   useAccelerometerXAnimateValueRef,
-  // ACCELEROMETER_MULTIPLEXER,
+  ACCELEROMETER_MULTIPLEXER,
 } from '../hooks/useAccelerometer';
+import COLORS from '../theme/colors';
 
-// TODO: work on perfomance
 const { width, height } = Dimensions.get('screen');
-// const w = width + ACCELEROMETER_MULTIPLEXER * 2;
-// const h = height + ACCELEROMETER_MULTIPLEXER * 2;
-const w = width;
-const h = height;
+const w = width + ACCELEROMETER_MULTIPLEXER * 2;
+const h = height + ACCELEROMETER_MULTIPLEXER * 2;
 
 const styles = StyleSheet.create({
   root: {
+    backgroundColor: COLORS.black,
     position: 'absolute',
     height: h,
     width: w,
-    // marginLeft: -ACCELEROMETER_MULTIPLEXER,
+    marginLeft: -ACCELEROMETER_MULTIPLEXER,
   },
   image: {
     flex: 1,

@@ -13,14 +13,14 @@ const RootModel = types
     }),
   )
   .actions(() => ({
-    loadAssets() {
-      return Promise.all([
+    loadAssets: flow(function* loadAssets() {
+      yield Promise.all([
+        Asset.loadAsync(require('../../assets/bg/main.png')),
         Font.loadAsync({
           'Geometria-Light': require('../../assets/fonts/geometria-light.ttf'),
         }),
-        Asset.loadAsync(require('../../assets/bg/main.png')),
       ]);
-    },
+    }),
   }))
   .actions(self => ({
     initialize: flow(function* initialize() {

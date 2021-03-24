@@ -1,8 +1,9 @@
 {
-  "name": "apex",
-  "displayName": "apex",
   "expo": {
-    "name": "apex",
+    "androidNavigationBar": {
+      "visible": "sticky-immersive"
+    },
+    "name": "Apex",
     "slug": "apex",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,10 +11,14 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/bg/main.png",
       "resizeMode": "cover",
       "backgroundColor": "#000000"
+    },
+    "ios": {
+      "bundleIdentifier": "com.wsite.apex"
     }
   }
 }
