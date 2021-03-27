@@ -22,8 +22,9 @@
       "buildNumber": "2"
     },
     "android": {
+      "permissions": [],
       "package": "com.wsite.apex",
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }
