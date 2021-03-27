@@ -10,9 +10,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/bg/main.png",
@@ -20,10 +18,12 @@
       "backgroundColor": "#000000"
     },
     "ios": {
-      "bundleIdentifier": "com.wsite.apex"
+      "bundleIdentifier": "com.wsite.apex",
+      "buildNumber": "2"
     },
     "android": {
-      "package": "com.wsite.apex"
+      "package": "com.wsite.apex",
+      "versionCode": 2
     }
   }
 }
