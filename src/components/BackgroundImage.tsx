@@ -46,7 +46,8 @@ const BackgroundImage: React.FC = () => {
     >
       <ImageBackground
         source={{
-          uri: Asset.fromModule(require('../../assets/bg/main.png')).uri,
+          uri: Asset.fromModule(require('../../assets/bg/main.png'))
+            .localUri as string,
         }}
         style={styles.image}
       />

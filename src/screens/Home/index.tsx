@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
   },
   signs: {
     marginHorizontal: 3 / PixelRatio.get(),
-    marginTop: 62 / PixelRatio.get(),
+    marginTop: 'auto',
+    marginBottom: 'auto',
     flexDirection: 'row',
   },
   firstRow: {
@@ -53,6 +54,9 @@ const styles = StyleSheet.create({
   },
   warningMsg: {
     color: COLORS.sandyBrown,
+  },
+  scroll: {
+    flexGrow: 1,
   },
 });
 
@@ -78,6 +82,7 @@ const HomeScreen: React.FC = observer(() => {
       </View>
 
       <ScrollView
+        contentContainerStyle={styles.scroll}
         overScrollMode="never"
         refreshControl={
           <RefreshControl
