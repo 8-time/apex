@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import HomeScreen from '../screens/Home';
 import SignScreen from '../screens/Sign';
-import BackgroundImage from '../components/BackgroundImage';
+import BackgroundImage from './BackgroundImage';
 import cardStyleInterpolatorFuntion from '../animation/cardStyleInterpolatorFuntion';
 import useRootStore from '../hooks/useRootStore';
 import BrandLoader from './BrandLoader';

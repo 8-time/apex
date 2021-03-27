@@ -1,4 +1,3 @@
-// TODO: Imporove performance of BackgroundImage Component
 import React from 'react';
 import {
   ImageBackground,
@@ -6,12 +5,11 @@ import {
   Dimensions,
   Animated,
 } from 'react-native';
-import { Asset } from 'expo-asset';
 import {
   useAccelerometerXAnimateValueRef,
   ACCELEROMETER_MULTIPLEXER,
-} from '../hooks/useAccelerometer';
-import COLORS from '../theme/colors';
+} from '../../hooks/useAccelerometer';
+import COLORS from '../../theme/colors';
 
 const { width, height } = Dimensions.get('screen');
 const w = width + ACCELEROMETER_MULTIPLEXER * 2;
@@ -45,10 +43,7 @@ const BackgroundImage: React.FC = () => {
       ]}
     >
       <ImageBackground
-        source={{
-          uri: Asset.fromModule(require('../../assets/bg/main.png'))
-            .localUri as string,
-        }}
+        source={require('./img/main.png')}
         style={styles.image}
       />
     </Animated.View>

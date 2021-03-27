@@ -1,6 +1,5 @@
 import { types, Instance, flow } from 'mobx-state-tree';
 import * as Font from 'expo-font';
-import { Asset } from 'expo-asset';
 import { WithLoadable } from './WithLoadable';
 import DailyModel from './Daily';
 
@@ -15,7 +14,6 @@ const RootModel = types
   .actions(() => ({
     loadAssets: flow(function* loadAssets() {
       yield Promise.all([
-        Asset.loadAsync(require('../../assets/bg/main.png')),
         Font.loadAsync({
           'Geometria-Light': require('../../assets/fonts/geometria-light.ttf'),
         }),
