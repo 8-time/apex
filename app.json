@@ -24,7 +24,7 @@
     "android": {
       "permissions": [],
       "package": "com.wsite.apex",
-      "versionCode": 3
+      "versionCode": 4
     }
   }
 }
