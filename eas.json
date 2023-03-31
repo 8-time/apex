@@ -6,6 +6,11 @@
       }
     },
     "ios": {
+      "preview": {
+        "ios": {
+          "simulator": true
+        }
+      },
       "release": {
         "workflow": "managed"
       }
