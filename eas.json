@@ -1,10 +1,14 @@
 {
-  "build": {
-    "preview": {
-      "ios": {
-        "simulator": true
+  "builds": {
+    "android": {
+      "release": {
+        "workflow": "managed"
       }
     },
-    "production": {}
+    "ios": {
+      "release": {
+        "workflow": "generic"
+      }
+    }
   }
 }
