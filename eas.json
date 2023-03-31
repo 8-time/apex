@@ -7,7 +7,7 @@
     },
     "ios": {
       "release": {
-        "workflow": "generic"
+        "workflow": "managed"
       }
     }
   }
