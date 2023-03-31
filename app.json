@@ -10,7 +10,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/bg/main.png",
@@ -25,6 +27,11 @@
       "permissions": [],
       "package": "com.wsite.apex",
       "versionCode": 4
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3fd545ce-8ffb-4ae7-9030-4b101c1d62a7"
+      }
     }
   }
 }
