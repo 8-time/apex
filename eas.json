@@ -3,6 +3,11 @@
     "version": ">= 3.8.1"
   },
   "build": {
+    "base": {
+      "ios": {
+        "image": "macos-big-sur-11.4-xcode-13.0"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal",

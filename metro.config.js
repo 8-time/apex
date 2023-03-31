@@ -1,4 +1,4 @@
-const { getDefaultConfig } = require('@expo/metro-config');
+const { getDefaultConfig } = require('expo/metro-config');
 
 module.exports = (async () => {
   const {
@@ -7,6 +7,7 @@ module.exports = (async () => {
   return {
     transformer: {
       babelTransformerPath: require.resolve('react-native-svg-transformer'),
+      assetPlugins: ['expo-asset/tools/hashAssetFiles'],
     },
     resolver: {
       assetExts: assetExts.filter(ext => ext !== 'svg'),
